@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff0f5">
+  <title>A Little Surprise For You ♡</title>
+  <style>
+    :root {
+      --pink: #ff6f9f;
+      --pink-dark: #d94379;
+      --rose: #ffe0eb;
+      --cream: #fffaf6;
+      --ink: #63394d;
+      --muted: #9a7182;
+      --white: #fff;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--ink);
+      font-family: ui-rounded, "Trebuchet MS", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 12% 18%, #fff 0 3px, transparent 4px),
+        radial-gradient(circle at 85% 25%, #fff 0 4px, transparent 5px),
+        linear-gradient(145deg, #fff4f7, #ffe7ef 55%, #fff8ed);
+      background-size: 130px 130px, 170px 170px, auto;
+    }
+
+    .wrap {
+      width: min(760px, 92vw);
+      margin: 0 auto;
+      padding: 24px 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 1
+    }
+
+    .wrap>.letter {
+      width: 100%
+    }
+
+    .eyebrow {
+      font-size: .78rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--pink-dark);
+      font-weight: 800
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 7vw, 4.5rem);
+      line-height: 1.02;
+      margin: 12px 0;
+      color: #bd4776;
+      letter-spacing: -.055em
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin: 0 auto 26px;
+      max-width: 480px;
+      line-height: 1.6
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #fff9;
+      border: 1px solid #ffd2e1;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: .82rem;
+      color: #a44b70
+    }
+
+    .stage {
+      margin: 36px auto 22px;
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+      perspective: 1000px
+    }
+
+    .envelope {
+      position: relative;
+      width: min(330px, 82vw);
+      height: 210px;
+      cursor: pointer;
+      filter: drop-shadow(0 18px 18px #c75b8425);
+      transition: transform .25s
+    }
+
+    .envelope:hover {
+      transform: translateY(-5px) rotate(-1deg)
+    }
+
+    .env-back {
+      position: absolute;
+      inset: 0;
+      background: #f7a9c3;
+      border-radius: 14px
+    }
+
+    .env-front {
+      position: absolute;
+      inset: 0;
+      background: #ffc5d7;
+      clip-path: polygon(0 0, 50% 57%, 100% 0, 100% 100%, 0 100%);
+      border-radius: 14px
+    }
+
+    .env-flap {
+      position: absolute;
+      inset: 0;
+      background: #ffb4cc;
+      clip-path: polygon(0 0, 100% 0, 50% 58%);
+      transform-origin: top;
+      transition: transform .75s cubic-bezier(.2, .8, .2, 1);
+      z-index: 4;
+      border-radius: 14px
+    }
+
+    .letter-peek {
+      position: absolute;
+      left: 7%;
+      width: 86%;
+      height: 82%;
+      bottom: 8px;
+      background: #fffdfb;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      transition: transform .7s .15s;
+      z-index: 2;
+      color: #d94e83;
+      font-size: 2.5rem
+    }
+
+    .seal {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      top: 54%;
+      transform: translate(-50%, -50%);
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #e9578c;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 12px #b73e6a44;
+      transition: opacity .3s
+    }
+
+    .envelope.open .env-flap {
+      transform: rotateX(180deg);
+      z-index: 1
+    }
+
+    .envelope.open .letter-peek {
+      transform: translateY(-115px);
+      z-index: 3
+    }
+
+    .envelope.open .seal {
+      opacity: 0
+    }
+
+    .hint {
+      font-size: .9rem;
+      color: #a56f83;
+      animation: bob 1.8s infinite
+    }
+
+    @keyframes bob {
+      50% {
+        transform: translateY(-5px)
+      }
+    }
+
+    .letter {
+      display: none;
+      text-align: left;
+      background: #fffdfb;
+      border: 1px solid #ffe0e9;
+      border-radius: 22px;
+      padding: clamp(22px, 5vw, 38px);
+      box-shadow: 0 18px 55px #b94f7620;
+      max-width: 620px;
+      margin: 20px auto 0;
+      position: relative
+    }
+
+    .letter.show {
+      display: block;
+      animation: pop .65s cubic-bezier(.2, .8, .2, 1) both
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(.97)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .letter .to {
+      color: var(--pink-dark);
+      font-weight: 800;
+      font-size: 1.05rem
+    }
+
+    .letter h2 {
+      font-family: Georgia, serif;
+      font-size: 2rem;
+      color: #b84373;
+      margin: 12px 0 18px
+    }
+
+    .letter p {
+      line-height: 1.85;
+      color: #765064;
+      margin: 0 0 14px
+    }
+
+    .signature {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      color: #c44d7d;
+      text-align: right;
+      margin-top: 24px
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 25px 0
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 19px;
+      font: 700 .95rem inherit;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s
+    }
+
+    button:hover {
+      transform: translateY(-2px)
+    }
+
+    .primary {
+      background: var(--pink);
+      color: white;
+      box-shadow: 0 8px 18px #e85b8c40
+    }
+
+    .secondary {
+      background: #fff;
+      color: #bd4776;
+      border: 1px solid #ffd0df
+    }
+
+    .music-note {
+      font-size: .78rem;
+      color: #a56f83;
+      margin-top: 9px
+    }
+
+    footer {
+      margin-top: 34px;
+      color: #b07e92;
+      font-size: .8rem
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -30px;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatUp linear forwards;
+      opacity: .8
+    }
+
+    @keyframes floatUp {
+      to {
+        transform: translateY(-110vh) rotate(35deg);
+        opacity: 0
+      }
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 1.4rem;
+      animation: twinkle 2s infinite alternate
+    }
+
+    @keyframes twinkle {
+      to {
+        transform: scale(1.3) rotate(15deg);
+        opacity: .5
+      }
+    }
+
+    .lock {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      place-items: center;
+      background: #7a2a4a55;
+      backdrop-filter: blur(6px);
+      padding: 18px
+    }
+
+    .lock.show {
+      display: grid
+    }
+
+    .lock-box {
+      background: #fffdfb;
+      border-radius: 24px;
+      padding: 28px 24px;
+      width: min(340px, 100%);
+      text-align: center;
+      box-shadow: 0 24px 60px #b94f7640;
+      animation: pop .45s cubic-bezier(.2, .8, .2, 1) both
+    }
+
+    .lock-box .ico {
+      font-size: 2.2rem
+    }
+
+    .lock-box h3 {
+      margin: 6px 0 4px;
+      color: #b84373;
+      font-size: 1.25rem
+    }
+
+    .lock-box p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: .88rem
+    }
+
+    .lock-box input {
+      width: 100%;
+      border: 2px solid #ffd0df;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font: inherit;
+      font-size: 1rem;
+      text-align: center;
+      color: var(--ink);
+      outline: 0;
+      background: #fff
+    }
+
+    .lock-box input:focus {
+      border-color: var(--pink)
+    }
+
+    .lock-err {
+      min-height: 1.2em;
+      margin: 8px 0 12px;
+      color: #d93d6b;
+      font-size: .82rem
+    }
+
+    .lock-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center
+    }
+
+    .shake {
+      animation: shake .4s
+    }
+
+    @keyframes shake {
+
+      20%,
+      60% {
+        transform: translateX(-8px)
+      }
+
+      40%,
+      80% {
+        transform: translateX(8px)
+      }
+    }
+
+    @media(max-width:480px) {
+      .wrap {
+        padding: 16px 0
+      }
+
+      .stage {
+        min-height: 230px
+      }
+
+      .envelope {
+        height: 185px
+      }
+
+      .letter h2 {
+        font-size: 1.7rem
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <h1>Hey, you! <span aria-hidden="true">♡</span></h1>
+    <p class="subtitle">I just made a little something for my current favorite person.
+    <div class="pill">💌 classified cuteness inside</div>
+
+    <div class="stage">
+      <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Buka surat cinta">
+        <div class="env-back"></div>
+        <div class="letter-peek">♡</div>
+        <div class="env-front"></div>
+        <div class="env-flap"></div>
+        <div class="seal">♥</div>
+      </div>
+      <span class="sparkle" style="left:12%;top:22%">✦</span>
+      <span class="sparkle" style="right:12%;bottom:20%;animation-delay:.7s">✧</span>
+    </div>
+
+    <div class="hint" id="hint" style="margin-top: -20px;">Klik amplopnya ya buat buka suratnya ♡
+    </div>
+
+    <article class="letter" id="letter">
+      <div class="to">Untuk seseorang yang spesial,</div>
+      <h2>A little note for you...</h2>
+      <p>Hai kamu! Kalau kamu sampai di bagian ini, berarti rasa penasaranmu berhasil mengalahkan rasa malu-malu. Hehe.
+        😆</p>
+      <p>Aku cuma mau bilang: terima kasih sudah hadir dan membuat hari-hariku jadi lebih berwarna. Hal-hal kecil
+        tentang kamu—senyummu, ceritamu, bahkan tingkah random-mu—punya tempat tersendiri di pikiranku.</p>
+      <p>Aku mungkin nggak selalu jago merangkai kata, tapi satu hal yang pasti: aku senang bisa mengenal kamu. Semoga
+        kita punya lebih banyak cerita seru, tawa receh, dan momen sederhana yang nantinya jadi kenangan manis.</p>
+      <p>Jangan lupa makan, istirahat yang cukup, dan tetap jadi kamu yang menyenangkan itu, ya. You are appreciated
+        more than you know. ♡</p>
+      <div class="signature">With lots of love,<br><strong>Your favorite human</strong> ♡</div>
+    </article>
+
+    <div class="actions">
+      <button class="primary" style="display: none;" id="openBtn">Buka suratnya 💌</button>
+      <button class="secondary" style="display: none;" id="musicBtn">♫ Play music</button>
+      <button class="secondary" id="heartBtn">More love! 💗</button>
+    </div>
+    <footer>made with a love and endless affection by Mas Mario ♡</footer>
+  </main>
+  <div class="lock" id="lock" role="dialog" aria-modal="true" aria-labelledby="lockTitle">
+    <form class="lock-box" id="lockForm" autocomplete="off">
+      <div class="ico">🔒</div>
+      <h3 id="lockTitle">Surat ini dikunci</h3>
+      <p>Masukkan password untuk membukanya ♡</p>
+      <input type="password" id="pw" placeholder="Password" aria-label="Password" autocomplete="off">
+      <div class="lock-err" id="lockErr" aria-live="polite"></div>
+      <div class="lock-actions">
+        <button type="submit" class="primary">Buka 💌</button>
+        <button type="button" class="secondary" id="lockCancel">Batal</button>
+      </div>
+    </form>
+  </div>
+  <script>
+    const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('letter');
+    const hint = document.getElementById('hint');
+    const openBtn = document.getElementById('openBtn');
+    let opened = false;
+
+    // Ganti password di bawah ini sesuai keinginan.
+    const PASSWORD = 'hellomyworld';
+    const lock = document.getElementById('lock');
+    const lockForm = document.getElementById('lockForm');
+    const pw = document.getElementById('pw');
+    const lockErr = document.getElementById('lockErr');
+
+    function openLetter() {
+      if (opened) { letter.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+      pw.value = ''; lockErr.textContent = '';
+      lock.classList.add('show');
+      setTimeout(() => pw.focus(), 50);
+    }
+    function closeLock() { lock.classList.remove('show'); }
+    document.getElementById('lockCancel').addEventListener('click', closeLock);
+    lock.addEventListener('click', e => { if (e.target === lock) closeLock(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLock(); });
+    lockForm.addEventListener('submit', e => {
+      e.preventDefault();
+      if (pw.value.trim().toLowerCase() === PASSWORD.toLowerCase()) {
+        closeLock(); unlockLetter();
+      } else {
+        lockErr.textContent = 'Password salah, coba lagi ya ♡';
+        lockForm.classList.remove('shake'); void lockForm.offsetWidth; lockForm.classList.add('shake');
+        pw.select();
+      }
+    });
+
+    function unlockLetter() {
+      opened = true;
+      envelope.classList.add('open');
+      letter.classList.add('show');
+      hint.textContent = 'Surprise! I hope you love this little thing ♡';
+      openBtn.textContent = 'Baca lagi 💗';
+      setTimeout(() => letter.scrollIntoView({ behavior: 'smooth', block: 'center' }), 450);
+      burstHearts(14);
+    }
+    envelope.addEventListener('click', openLetter);
+    envelope.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLetter(); } });
+    openBtn.addEventListener('click', openLetter);
+
+    function burstHearts(count = 8) {
+      const symbols = ['💗', '💕', '♡', '💖', '✨'];
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('span');
+        el.className = 'heart'; el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        el.style.left = (Math.random() * 100) + 'vw';
+        el.style.fontSize = (16 + Math.random() * 20) + 'px';
+        el.style.animationDuration = (3 + Math.random() * 3) + 's';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 6500);
+      }
+    }
+    document.getElementById('heartBtn').addEventListener('click', () => burstHearts(24));
+
+    // Musik dari file lokal, mulai di detik tertentu dengan fade in.
+    const MUSIC_FILE = 'backsound.mp3';
+    const START_AT = 38;      // detik mulai
+    const FADE_MS = 3000;     // lama fade in
+    const MAX_VOL = 0.8;
+    const musicBtn = document.getElementById('musicBtn');
+    const musicStatus = document.getElementById('musicStatus');
+    const audio = new Audio(MUSIC_FILE);
+    audio.preload = 'auto';
+    let fadeTimer = null;
+    function fadeIn() {
+      clearInterval(fadeTimer);
+      audio.volume = 0;
+      const t0 = performance.now();
+      fadeTimer = setInterval(() => {
+        const k = Math.min(1, (performance.now() - t0) / FADE_MS);
+        audio.volume = MAX_VOL * k;
+        if (k >= 1) clearInterval(fadeTimer);
+      }, 50);
+    }
+    function startMusic() {
+      const go = () => {
+        try { audio.currentTime = START_AT; } catch (e) { }
+        fadeIn();
+        audio.play().catch(() => { musicStatus.textContent = 'Browser belum mengizinkan audio. Coba tekan tombol musik lagi.'; });
+      };
+      if (audio.readyState >= 1) go(); else audio.addEventListener('loadedmetadata', go, { once: true });
+    }
+    audio.addEventListener('play', () => { musicBtn.textContent = 'Ⅱ Pause music'; musicStatus.textContent = '♪ lagi diputar untuk kamu...'; });
+    audio.addEventListener('pause', () => { musicBtn.textContent = '♫ Play music'; musicStatus.textContent = 'Musik dijeda.'; });
+    audio.addEventListener('ended', startMusic); // ulang dari detik START_AT dengan fade in
+    audio.addEventListener('error', () => { musicStatus.textContent = 'File lagu "' + MUSIC_FILE + '" tidak ditemukan. Taruh di folder yang sama dengan halaman ini.'; });
+    // Autoplay: coba langsung saat halaman dibuka. Browser biasanya memblokir audio
+    // sebelum ada interaksi, jadi kalau gagal, musik mulai di sentuhan/klik pertama.
+    let autoDone = false;
+    function tryAutoplay() {
+      if (autoDone) return;
+      const go = () => {
+        try { audio.currentTime = START_AT; } catch (e) { }
+        fadeIn();
+        audio.play().then(() => { autoDone = true; removeGestureListeners(); }).catch(() => { });
+      };
+      if (audio.readyState >= 1) go(); else audio.addEventListener('loadedmetadata', go, { once: true });
+    }
+    function onFirstGesture(e) {
+      if (e.target && e.target.closest && e.target.closest('#musicBtn')) { autoDone = true; removeGestureListeners(); return; }
+      tryAutoplay();
+    }
+    const gestureEvents = ['click', 'pointerup', 'touchend', 'keydown'];
+    function removeGestureListeners() { gestureEvents.forEach(ev => document.removeEventListener(ev, onFirstGesture, true)); }
+    gestureEvents.forEach(ev => document.addEventListener(ev, onFirstGesture, true));
+    tryAutoplay();
+
+    musicBtn.addEventListener('click', () => {
+      if (!audio.paused) { audio.pause(); return; }
+      // lanjut dari posisi terakhir kalau sudah pernah diputar, kalau belum mulai dari START_AT
+      if (audio.currentTime > START_AT) { fadeIn(); audio.play().catch(() => { }); }
+      else startMusic();
+    });
+  </script>
+</body>
+
+</html>
